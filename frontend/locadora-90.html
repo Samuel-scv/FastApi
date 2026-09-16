@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>*~*~ VIDEO LOCADORA GALAXIA ~*~* :: Sua fita esta aqui!!!</title>
+<style>
+:root{ color-scheme: light; }
+body{
+  margin:0; padding:0;
+  background-color:#000044;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 90px 70px, #fff, transparent),
+    radial-gradient(2px 2px at 160px 20px, #ffff66, transparent),
+    radial-gradient(1px 1px at 230px 110px, #fff, transparent),
+    radial-gradient(1px 1px at 300px 60px, #99ccff, transparent);
+  background-size:340px 150px;
+  color:#ffffff;
+  font-family:"Times New Roman",Times,serif;
+  font-size:16px;
+}
+.pagina{
+  width:96%; max-width:820px; margin:14px auto; background:#000000;
+  border:4px ridge #ffcc00; padding:0;
+}
+.topo{ background:#000066; border-bottom:3px double #ffcc00; padding:14px 10px; text-align:center }
+.titulao{
+  font-family:"Comic Sans MS","Brush Script MT",cursive;
+  font-size:40px; font-weight:bold; margin:0;
+  color:#ffdd00;
+  text-shadow:2px 2px 0 #ff00aa, 4px 4px 0 #00ffff;
+  letter-spacing:1px;
+}
+.subtitulo{ color:#00ff00; font-size:15px; margin:6px 0 0 }
+blink, .pisca{ animation:pisca 1s steps(2,start) infinite }
+@keyframes pisca{ to{ visibility:hidden } }
+@media (prefers-reduced-motion:reduce){ .pisca,blink{animation:none} marquee{--x:0} }
+
+.faixa{ background:#ff0000; color:#ffff00; font-weight:bold; font-size:15px; padding:4px 0; border-top:2px solid #fff; border-bottom:2px solid #fff }
+
+.menu{ background:#333399; padding:8px; text-align:center; border-bottom:3px double #ffcc00 }
+.menu a{
+  color:#ffff00; font-family:Verdana,Arial,sans-serif; font-size:13px; font-weight:bold;
+  text-decoration:underline; margin:0 6px; cursor:pointer; display:inline-block; padding:2px 0;
+}
+.menu a:hover{ color:#00ffff; background:#ff00aa }
+.menu a.ativo{ color:#00ff00 }
+
+.corpo{ padding:14px }
+.caixa{ border:3px outset #cccccc; background:#000033; padding:12px; margin-bottom:16px }
+h2.secao{
+  font-family:"Comic Sans MS",cursive; color:#00ffff; font-size:24px; margin:0 0 4px;
+  border-bottom:2px dotted #ffcc00; padding-bottom:4px;
+}
+p{ line-height:1.5 }
+a{ color:#00ffff }
+a:visited{ color:#ff99ff }
+hr.arco{ height:5px; border:0; background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00); margin:14px 0 }
+
+table.fitas{ width:100%; border-collapse:collapse; background:#000055; font-size:14px }
+table.fitas th{ background:#6600cc; color:#ffff00; border:2px outset #9966ff; padding:5px; font-family:Verdana,sans-serif; font-size:12px }
+table.fitas td{ border:2px inset #444488; padding:6px; vertical-align:top }
+table.fitas tr:hover td{ background:#001188 }
+.novo{ background:#ffff00; color:#ff0000; font-size:10px; font-weight:bold; font-family:Verdana,sans-serif; padding:1px 4px; border:1px solid #f00 }
+.esgotado{ color:#ff6666; font-weight:bold }
+.disp{ color:#00ff66; font-weight:bold }
+
+.bt{
+  font-family:Verdana,Arial,sans-serif; font-size:12px; font-weight:bold;
+  background:#c0c0c0; color:#000080; border:3px outset #ffffff; padding:4px 10px; cursor:pointer;
+}
+.bt:active{ border-style:inset }
+.bt.grande{ font-size:15px; padding:7px 18px; background:#ffcc00; color:#660000 }
+input,select,textarea{
+  font-family:"Courier New",monospace; font-size:13px; background:#ffffff; color:#000080;
+  border:2px inset #cccccc; padding:3px; width:100%; box-sizing:border-box;
+}
+label{ display:block; color:#ffff66; font-family:Verdana,sans-serif; font-size:11px; margin:8px 0 2px }
+
+.colunas{ display:flex; flex-wrap:wrap; gap:14px }
+.colunas > *{ flex:1 1 240px }
+
+.fitinha{ border:3px ridge #aa7700; background:#111144; padding:8px; text-align:center }
+.lombada{ height:110px; background:linear-gradient(180deg,#222,#555 40%,#222); border:2px solid #000; color:#fff;
+  display:flex; align-items:center; justify-content:center; font-family:Verdana,sans-serif; font-size:13px; font-weight:bold; padding:6px }
+.preco{ color:#00ff00; font-weight:bold; font-size:17px; font-family:"Courier New",monospace }
+
+.contador{ font-family:"Courier New",monospace; background:#000; color:#00ff00; border:3px inset #888; padding:4px 8px; letter-spacing:4px; font-size:19px }
+.rodape{ background:#000066; border-top:3px double #ffcc00; padding:12px; text-align:center; font-size:12px; color:#cccccc; font-family:Verdana,sans-serif }
+.selo{ display:inline-block; border:2px outset #999; background:#c0c0c0; color:#000080; font-family:Verdana,sans-serif;
+  font-size:10px; font-weight:bold; padding:4px 6px; margin:3px }
+.construcao{ background:#ffcc00; color:#000; font-family:Verdana,sans-serif; font-weight:bold; font-size:12px; padding:6px; border:3px dashed #000; text-align:center }
+.recado{ border-left:5px solid #ff00aa; background:#110022; padding:8px; margin-bottom:8px; font-size:14px }
+.recado b{ color:#ffcc00 }
+.oculto{ display:none }
+.aviso{ background:#ffffcc; color:#990000; border:3px double #990000; padding:8px; font-family:Verdana,sans-serif; font-size:12px; font-weight:bold; margin-bottom:12px }
+</style>
+</head>
+<body>
+<div class="pagina">
+
+  <div class="topo">
+    <div class="titulao">Video Locadora Galaxia</div>
+    <p class="subtitulo">&gt;&gt;&gt; A MAIOR VIDEO LOCADORA DA INTERNET BRASILEIRA &lt;&lt;&lt;</p>
+  </div>
+
+  <marquee class="faixa" scrollamount="6">*** PROMOCAO RELAMPAGO: ALUGUE 2 FITAS E LEVE A 3a POR 1 REAL !!! *** NOVIDADE: AGORA ACEITAMOS RESERVA POR E-MAIL *** DEVOLVA A FITA REBOBINADA, POR FAVOR !!! *** ABERTO ATE AS 23H TODOS OS DIAS ***</marquee>
+
+  <div class="menu" id="menu"></div>
+
+  <div class="corpo" id="corpo"></div>
+
+  <div class="rodape">
+    Voce e o visitante numero <span class="contador" id="contador">000000</span><br><br>
+    <span class="selo">MELHOR VISUALIZADO EM 800x600</span>
+    <span class="selo">NETSCAPE NAVIGATOR 4.0</span>
+    <span class="selo">HTML 3.2</span>
+    <span class="selo">SEM FRAMES</span><br>
+    <p>Esta pagina faz parte do <a onclick="ir('recados')">WEBRING DAS LOCADORAS</a> &nbsp;[ &lt;&lt; anterior | aleatoria | proxima &gt;&gt; ]</p>
+    <p>(C) 1998 Video Locadora Galaxia &mdash; Rua das Fitas, 42 &mdash; Fone: (018) 622-1998<br>
+    Ultima atualizacao desta homepage: 14/11/1998<br>
+    <span class="pisca">Assine nosso livro de visitas!!!</span></p>
+  </div>
+</div>
+
+<script>
+/* ====== dados (mesmo modelo da API: produtos, clientes, alugueis, planos) ====== */
+var CHAVE='galaxia90';
+var base={
+  produtos:[
+    {id:1,titulo:'O Auto da Compadecida',genero:'Comedia',ano:2000,class:'12',aluguel:3.00,estoque:4,lancamento:true,
+     sinopse:'Joao Grilo e Chico aprontam no sertao ate serem julgados no ceu. RISADA GARANTIDA!'},
+    {id:2,titulo:'Central do Brasil',genero:'Drama',ano:1998,class:'12',aluguel:3.00,estoque:2,lancamento:true,
+     sinopse:'Dora escreve cartas na estacao e acaba atravessando o pais com um menino.'},
+    {id:3,titulo:'Cidade de Deus',genero:'Drama',ano:2002,class:'16',aluguel:3.50,estoque:3,lancamento:false,
+     sinopse:'Dois garotos, dois caminhos. Um vira fotografo, o outro vira chefe.'},
+    {id:4,titulo:'Tropa de Elite',genero:'Acao',ano:2007,class:'18',aluguel:3.50,estoque:0,lancamento:false,
+     sinopse:'O capitao Nascimento procura um substituto antes de sair do BOPE.'},
+    {id:5,titulo:'Bacurau',genero:'Suspense',ano:2019,class:'16',aluguel:3.50,estoque:3,lancamento:false,
+     sinopse:'Um povoado some do mapa e comeca a receber visitas muito estranhas.'},
+    {id:6,titulo:'Que Horas Ela Volta?',genero:'Drama',ano:2015,class:'12',aluguel:3.00,estoque:1,lancamento:false,
+     sinopse:'A filha da empregada chega na casa dos patroes e nada volta ao lugar.'}
+  ],
+  planos:[
+    {id:1,nome:'CLUBE PRATA',preco:19.90,limite:4,txt:'4 fitas por mes + carteirinha plastificada'},
+    {id:2,nome:'CLUBE OURO',preco:34.90,limite:8,txt:'8 fitas por mes + 1 dia extra de prazo + pipoca gratis'},
+    {id:3,nome:'CLUBE DIAMANTE',preco:59.90,limite:20,txt:'20 fitas por mes + entrega em casa de bicicleta'}
+  ],
+  alugueis:[],
+  recados:[
+    {nome:'Ricardinho',cidade:'Aracatuba-SP',txt:'Melhor locadora do bairro!! alugo aqui desde 96. abracos pro seu Jorge do balcao'},
+    {nome:'Fabi_Girl',cidade:'Birigui',txt:'adorei a homepage de voces!!! poe mais filme de romance por favor :):):)'},
+    {nome:'MASTER_DO_VHS',cidade:'internet',txt:'quem quiser trocar link comigo manda email. tenho pagina de dinossauros'}
+  ],
+  visitas:104873
+};
+var dados;
+try{ dados = JSON.parse(localStorage.getItem(CHAVE)) || base; }catch(e){ dados = base; }
+if(!dados.produtos) dados = base;
+function salvar(){ try{ localStorage.setItem(CHAVE, JSON.stringify(dados)); }catch(e){} }
+
+dados.visitas++; salvar();
+document.getElementById('contador').textContent = String(dados.visitas).padStart(6,'0');
+
+/* ====== navegacao ====== */
+var PAGS=[['inicio','HOME'],['catalogo','CATALOGO'],['alugar','ALUGUE AQUI'],['clube','CLUBE DE SOCIOS'],['recados','LIVRO DE VISITAS'],['sobre','QUEM SOMOS']];
+var atual='inicio';
+function ir(p){ atual=p; desenhar(); window.scrollTo(0,0); }
+
+function menu(){
+  document.getElementById('menu').innerHTML = PAGS.map(function(p){
+    return '<a class="'+(p[0]===atual?'ativo':'')+'" onclick="ir(\''+p[0]+'\')">['+p[1]+']</a>';
+  }).join(' ');
+}
+
+function dinheiro(v){ return 'R$ ' + v.toFixed(2).replace('.',','); }
+function limpo(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function hoje(){ return new Date(); }
+function maisDias(n){ var d=new Date(); d.setDate(d.getDate()+n); return d; }
+function dataBR(d){ d=new Date(d); return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear(); }
+
+/* ====== paginas ====== */
+function pgInicio(){
+  var novos = dados.produtos.filter(function(p){return p.lancamento;});
+  return ''
+  + '<div class="aviso">ATENCAO SOCIO: a fita deve ser devolvida REBOBINADA. Multa de R$ 1,00 por fita nao rebobinada.</div>'
+  + '<div class="caixa"><h2 class="secao">Bem vindo a nossa homepage!!!</h2>'
+  + '<p>Ola visitante! Voce acaba de entrar na pagina oficial da <b>VIDEO LOCADORA GALAXIA</b>, sua locadora de confianca desde 1991. '
+  + 'Aqui voce confere nosso <a onclick="ir(\'catalogo\')">catalogo completo</a>, reserva sua fita pela internet e ainda assina o nosso '
+  + '<a onclick="ir(\'clube\')">clube de socios</a> com descontao.</p>'
+  + '<p><span class="pisca" style="color:#ff0000;font-weight:bold">*** NOVIDADE ***</span> Agora voce pode alugar sem sair de casa! '
+  + 'Basta preencher o formulario na secao <a onclick="ir(\'alugar\')">ALUGUE AQUI</a> e passar na loja para retirar.</p></div>'
+  + '<hr class="arco">'
+  + '<div class="caixa"><h2 class="secao">Lancamentos da semana</h2><div class="colunas">'
+  + novos.map(function(p){
+      return '<div class="fitinha"><div class="lombada">'+limpo(p.titulo)+'</div>'
+        + '<p><span class="novo">NOVO!</span><br><b>'+limpo(p.genero)+'</b> &middot; '+p.ano+'<br>'
+        + '<span class="preco">'+dinheiro(p.aluguel)+'</span><br>'
+        + (p.estoque>0?'<span class="disp">'+p.estoque+' fita(s) na prateleira</span>':'<span class="esgotado">TODAS ALUGADAS</span>')+'</p>'
+        + '<button class="bt" onclick="alugarDireto('+p.id+')">QUERO ESSA!</button></div>';
+    }).join('')
+  + '</div></div>'
+  + '<div class="construcao">|| &nbsp; ESTA SECAO ESTA EM CONSTRUCAO &mdash; VOLTE EM BREVE PARA VER OS DVDs !!! &nbsp; ||</div>';
+}
+
+function pgCatalogo(){
+  var g = {};
+  dados.produtos.forEach(function(p){ (g[p.genero]=g[p.genero]||[]).push(p); });
+  var html = '<div class="caixa"><h2 class="secao">Catalogo completo</h2>'
+    + '<p>Total de <b>'+dados.produtos.length+'</b> titulos cadastrados. Clique no titulo para ver a sinopse.</p>'
+    + '<table class="fitas"><tr><th>TITULO</th><th>GENERO</th><th>ANO</th><th>IDADE</th><th>PRECO</th><th>SITUACAO</th><th></th></tr>';
+  dados.produtos.forEach(function(p){
+    html += '<tr><td><a onclick="sinopse('+p.id+')"><b>'+limpo(p.titulo)+'</b></a> '+(p.lancamento?'<span class="novo">NOVO!</span>':'')
+      + '<div id="sin'+p.id+'" class="oculto" style="color:#cccccc;font-size:13px">'+limpo(p.sinopse)+'</div></td>'
+      + '<td>'+limpo(p.genero)+'</td><td>'+p.ano+'</td><td>'+p.class+' anos</td>'
+      + '<td><span class="preco">'+dinheiro(p.aluguel)+'</span></td>'
+      + '<td>'+(p.estoque>0?'<span class="disp">'+p.estoque+' disp.</span>':'<span class="esgotado">ALUGADA</span>')+'</td>'
+      + '<td><button class="bt" onclick="alugarDireto('+p.id+')">ALUGAR</button></td></tr>';
+  });
+  html += '</table></div>';
+  html += '<div class="caixa"><h2 class="secao">Por genero</h2><ul>';
+  for(var k in g){ html += '<li><b>'+limpo(k)+'</b>: '+g[k].map(function(p){return limpo(p.titulo);}).join(', ')+'</li>'; }
+  html += '</ul></div>';
+  return html;
+}
+function sinopse(id){ var e=document.getElementById('sin'+id); e.className = e.className==='oculto' ? '' : 'oculto'; }
+
+function pgAlugar(){
+  var abertos = dados.alugueis.filter(function(a){return !a.devolvido;});
+  return '<div class="caixa"><h2 class="secao">Ficha de locacao</h2>'
+  + '<p>Preencha seus dados abaixo. Sua fita fica reservada no balcao por 24 horas.</p>'
+  + '<div class="colunas">'
+  + '<div><label>SEU NOME COMPLETO</label><input id="f_nome" placeholder="digite aqui">'
+  + '<label>TELEFONE</label><input id="f_fone" placeholder="(018) 000-0000">'
+  + '<label>CIDADE</label><input id="f_cidade" placeholder="Aracatuba-SP"></div>'
+  + '<div><label>ESCOLHA A FITA</label><select id="f_fita">'
+  + dados.produtos.map(function(p){ return '<option value="'+p.id+'" '+(p.estoque<1?'disabled':'')+'>'+limpo(p.titulo)+' - '+dinheiro(p.aluguel)+(p.estoque<1?' (ALUGADA)':'')+'</option>'; }).join('')
+  + '</select>'
+  + '<label>QUANTOS DIAS</label><select id="f_dias"><option>1</option><option selected>2</option><option>3</option><option>5</option><option>7</option></select>'
+  + '<label>SOCIO DO CLUBE?</label><select id="f_plano"><option value="">nao, sou avulso</option>'
+  + dados.planos.map(function(p){return '<option value="'+p.id+'">'+p.nome+'</option>';}).join('')
+  + '</select></div></div>'
+  + '<p style="text-align:center;margin-top:14px"><button class="bt grande" onclick="registrar()">ENVIAR FICHA &gt;&gt;&gt;</button></p>'
+  + '<p style="font-size:12px;color:#cccccc">Multa por atraso: R$ 2,00 por dia, por fita. Socio do CLUBE OURO tem 1 dia extra de prazo.</p></div>'
+  + '<hr class="arco">'
+  + '<div class="caixa"><h2 class="secao">Fitas que estao na rua</h2>'
+  + (abertos.length
+      ? '<table class="fitas"><tr><th>CLIENTE</th><th>FITA</th><th>RETIRADA</th><th>DEVOLVER ATE</th><th>SITUACAO</th><th></th></tr>'
+        + abertos.map(function(a){
+            var atraso = Math.round((hoje() - new Date(a.prazo))/86400000);
+            var sit = atraso>0 ? '<span class="esgotado pisca">ATRASADA '+atraso+' DIA(S) - MULTA '+dinheiro(atraso*2)+'</span>'
+                    : atraso===0 ? '<span style="color:#ffcc00">VENCE HOJE</span>'
+                    : '<span class="disp">EM DIA</span>';
+            return '<tr><td>'+limpo(a.nome)+'</td><td>'+limpo(a.fita)+'</td><td>'+dataBR(a.retirada)+'</td><td>'+dataBR(a.prazo)+'</td><td>'+sit+'</td>'
+              + '<td><button class="bt" onclick="devolver('+a.id+')">DEVOLVER</button></td></tr>';
+          }).join('')
+        + '</table>'
+      : '<p>Nenhuma fita fora da loja no momento. Todas na prateleira!</p>')
+  + '</div>';
+}
+
+function pgClube(){
+  return '<div class="caixa"><h2 class="secao">Clube de socios Galaxia</h2>'
+  + '<p>Vire socio e pague menos em todas as locacoes! A carteirinha e feita na hora, e gratis.</p>'
+  + '<div class="colunas">'
+  + dados.planos.map(function(p,i){
+      var cor = ['#999999','#ffcc00','#66ffff'][i];
+      return '<div class="fitinha" style="border-color:'+cor+'">'
+        + '<div class="lombada" style="background:linear-gradient(180deg,#333,'+cor+'44 50%,#333);font-size:15px;color:'+cor+'">'+p.nome+'</div>'
+        + '<p><span class="preco">'+dinheiro(p.preco)+'</span><br><span style="font-size:12px">por mes</span></p>'
+        + '<p style="font-size:13px">'+limpo(p.txt)+'</p>'
+        + '<p><b>'+p.limite+'</b> fitas inclusas no mes</p>'
+        + '<button class="bt" onclick="assinar(\''+p.nome+'\')">ASSINAR AGORA</button></div>';
+    }).join('')
+  + '</div></div>'
+  + '<div class="caixa"><h2 class="secao">Perguntas mais frequentes</h2>'
+  + '<p><b>P: E se eu atrasar a devolucao?</b><br>R: Cobramos R$ 2,00 por dia por fita. Com 3 dias de atraso a conta e bloqueada ate acertar.</p>'
+  + '<p><b>P: Posso comprar a fita em vez de alugar?</b><br>R: Pode! Fale com o seu Jorge no balcao. A fita sai do estoque na hora.</p>'
+  + '<p><b>P: Voces tem DVD?</b><br>R: Estamos estudando. Por enquanto so VHS e algumas fitas em Betamax no fundo da loja.</p></div>';
+}
+
+function pgRecados(){
+  return '<div class="caixa"><h2 class="secao">Livro de visitas</h2>'
+  + '<p>Deixe seu recado! Nao vale palavrao, o seu Jorge le tudo.</p>'
+  + '<div class="colunas"><div><label>SEU NOME OU APELIDO</label><input id="r_nome"></div>'
+  + '<div><label>SUA CIDADE</label><input id="r_cidade"></div></div>'
+  + '<label>RECADO</label><textarea id="r_txt" rows="3"></textarea>'
+  + '<p style="text-align:center;margin-top:10px"><button class="bt grande" onclick="assinarLivro()">ASSINAR O LIVRO</button></p>'
+  + '<hr class="arco">'
+  + dados.recados.map(function(r){
+      return '<div class="recado"><b>'+limpo(r.nome)+'</b> <span style="font-size:12px;color:#99ccff">('+limpo(r.cidade)+')</span><br>'+limpo(r.txt)+'</div>';
+    }).join('')
+  + '</div>';
+}
+
+function pgSobre(){
+  return '<div class="caixa"><h2 class="secao">Quem somos</h2>'
+  + '<p>A <b>Video Locadora Galaxia</b> abriu as portas em marco de 1991 com 82 fitas e uma televisao de 14 polegadas no balcao. '
+  + 'Hoje somos '+dados.produtos.length+' titulos no catalogo e mais de '+(dados.visitas>1000?Math.floor(dados.visitas/40):200)+' socios cadastrados.</p>'
+  + '<p><b>Horario:</b> segunda a sabado das 10h as 23h. Domingo das 14h as 22h.<br>'
+  + '<b>Endereco:</b> Rua das Fitas, 42 &mdash; ao lado da padaria.<br>'
+  + '<b>Fone/Fax:</b> (018) 622-1998<br>'
+  + '<b>E-mail:</b> galaxia@provedor.com.br</p></div>'
+  + '<div class="caixa"><h2 class="secao">Nossos links favoritos</h2><ul>'
+  + '<li><a onclick="alert(\'Link quebrado! Erro 404 :(\')">Pagina do Zeca sobre dinossauros</a></li>'
+  + '<li><a onclick="alert(\'Link quebrado! Erro 404 :(\')">Cartoes virtuais gratis</a></li>'
+  + '<li><a onclick="alert(\'Link quebrado! Erro 404 :(\')">Como rebobinar sua fita corretamente</a></li>'
+  + '<li><a onclick="ir(\'recados\')">Assine nosso livro de visitas</a></li></ul>'
+  + '<p style="text-align:center"><span class="selo">FEITO NO BLOCO DE NOTAS</span><span class="selo">SEM COOKIES</span><span class="selo">28.8 kbps FRIENDLY</span></p></div>';
+}
+
+/* ====== acoes ====== */
+function alugarDireto(id){
+  ir('alugar');
+  setTimeout(function(){
+    var s=document.getElementById('f_fita'); if(s) s.value=id;
+    var n=document.getElementById('f_nome'); if(n) n.focus();
+  },30);
+}
+
+function registrar(){
+  var nome=(document.getElementById('f_nome').value||'').trim();
+  var fone=(document.getElementById('f_fone').value||'').trim();
+  var id=Number(document.getElementById('f_fita').value);
+  var dias=Number(document.getElementById('f_dias').value);
+  var planoId=document.getElementById('f_plano').value;
+  var p=dados.produtos.filter(function(x){return x.id===id;})[0];
+  if(!nome){ alert('PREENCHA O SEU NOME!!!'); return; }
+  if(!fone){ alert('Precisamos do telefone para avisar do vencimento.'); return; }
+  if(!p || p.estoque<1){ alert('Essa fita ja esta toda alugada. Escolha outra!'); return; }
+  var extra = (planoId==='2') ? 1 : 0;
+  var a={ id:Date.now(), nome:nome, fone:fone, fita:p.titulo, produto_id:p.id,
+          retirada:hoje().toISOString(), prazo:maisDias(dias+extra).toISOString(), valor:p.aluguel, devolvido:false };
+  dados.alugueis.push(a); p.estoque--; salvar(); desenhar();
+  alert('FICHA REGISTRADA COM SUCESSO!!!\n\nFita: '+p.titulo+'\nValor: '+dinheiro(p.aluguel)
+    +'\nDevolver ate: '+dataBR(a.prazo)+(extra?'\n(+1 dia de bonus CLUBE OURO)':'')
+    +'\n\nPasse na loja para retirar. E nao esqueca de rebobinar!');
+}
+
+function devolver(id){
+  var a=dados.alugueis.filter(function(x){return x.id===id;})[0];
+  if(!a) return;
+  var atraso=Math.round((hoje()-new Date(a.prazo))/86400000);
+  var multa=atraso>0?atraso*2:0;
+  if(!confirm('Receber de volta "'+a.fita+'"?'+(multa?'\n\nMULTA DE '+dinheiro(multa)+' POR '+atraso+' DIA(S) DE ATRASO.':''))) return;
+  a.devolvido=true;
+  var p=dados.produtos.filter(function(x){return x.id===a.produto_id;})[0];
+  if(p) p.estoque++;
+  salvar(); desenhar();
+  alert(multa ? 'Fita recebida. Cobrar '+dinheiro(multa)+' de multa no caixa.' : 'Fita recebida e de volta na prateleira. Obrigado!');
+}
+
+function assinar(nome){ alert('OBA! Voce escolheu o '+nome+'.\n\nPasse na loja com RG e comprovante de residencia que fazemos a sua carteirinha na hora.'); }
+
+function assinarLivro(){
+  var n=(document.getElementById('r_nome').value||'').trim();
+  var c=(document.getElementById('r_cidade').value||'').trim();
+  var t=(document.getElementById('r_txt').value||'').trim();
+  if(!n||!t){ alert('Escreva pelo menos o nome e o recado!'); return; }
+  dados.recados.unshift({nome:n,cidade:c||'internet',txt:t});
+  salvar(); desenhar();
+  alert('Recado assinado! Obrigado pela visita :)');
+}
+
+/* ====== render ====== */
+function desenhar(){
+  menu();
+  document.getElementById('corpo').innerHTML =
+    ({inicio:pgInicio,catalogo:pgCatalogo,alugar:pgAlugar,clube:pgClube,recados:pgRecados,sobre:pgSobre})[atual]();
+}
+desenhar();
+</script>
+</body>
+</html>
