@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-noite: #000044;
+  --color-azul: #000066;
+  --color-caixa: #000033;
+  --color-ouro: #ffcc00;
+  --color-neon: #00ffff;
+  --color-verde: #00ff66;
+  --color-rosa: #ff00aa;
+  --color-roxo: #6600cc;
+}
+
+@utility ridge { border-style: ridge; }
+@utility outset { border-style: outset; }
+@utility inset { border-style: inset; }
+
+body {
+  margin: 0;
+  color: #fff;
+  font-family: "Times New Roman", Times, serif;
+  background-color: #000044;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(2px 2px at 160px 20px, #ffff66, transparent),
+    radial-gradient(1px 1px at 300px 60px, #99ccff, transparent);
+  background-size: 340px 150px;
+}
+
+@layer components {
+  .bt { @apply outset cursor-pointer border-[3px] border-white bg-[#c0c0c0] px-2.5 py-1 font-sans text-xs font-bold text-[#000080] active:inset; }
+  .bt-grande { @apply bg-ouro px-5 py-2 text-base text-[#660000]; }
+  .campo { @apply inset w-full border-2 border-[#ccc] bg-white p-1 font-mono text-[13px] text-[#000080]; }
+  .rotulo { @apply mt-2 mb-0.5 block font-sans text-[11px] text-[#ffff66]; }
+  .th { @apply outset border-2 border-[#9966ff] bg-roxo p-1.5 font-sans text-xs text-[#ffff00]; }
+  .td { @apply inset border-2 border-[#444488] p-1.5 align-top; }
+}
+
+@keyframes pisca { to { visibility: hidden; } }
+@keyframes faixa { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+.pisca { animation: pisca 1s steps(2, start) infinite; }
+.faixa > span { display: inline-block; white-space: nowrap; animation: faixa 22s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .pisca, .faixa > span { animation: none; } }

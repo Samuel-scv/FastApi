@@ -1,12 +1,27 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from . import models
-from .database import engine, SessionLocal
-from .routers import produtos, clientes, planos, alugueis, vendas
-from .dados_iniciais import popular_se_vazio
+from . import models  # noqa: F401  (registra as tabelas no Base)
+from .core.config import settings
+from .core.database import Base, SessionLocal, atualizar_esquema_sqlite, engine
+from .routers import alugueis, clientes, planos, produtos, vendas
+from .seeds.dados_iniciais import popular_se_vazio
 
-models.Base.metadata.create_all(bind=engine)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: cria as tabelas e carrega os dados de exemplo no primeiro uso.
+    Base.metadata.create_all(bind=engine)
+    atualizar_esquema_sqlite()
+    db = SessionLocal()
+    try:
+        popular_se_vazio(db)
+    finally:
+        db.close()
+    yield
+
 
 app = FastAPI(
     title="Video Locadora Galaxia — API",
@@ -14,13 +29,14 @@ app = FastAPI(
         "API da videolocadora: acervo de produtos, clientes, planos de assinatura, "
         "aluguéis (com prazo e multa por atraso) e vendas definitivas."
     ),
-    version="1.0.0",
+    version="1.1.0",
+    lifespan=lifespan,
 )
 
 # Libera o front (arquivo HTML local, GitHub Pages, etc.) a consumir a API.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -30,15 +46,6 @@ app.include_router(clientes.router)
 app.include_router(planos.router)
 app.include_router(alugueis.router)
 app.include_router(vendas.router)
-
-
-@app.on_event("startup")
-def preparar_dados_demo():
-    db = SessionLocal()
-    try:
-        popular_se_vazio(db)
-    finally:
-        db.close()
 
 
 @app.get("/", tags=["status"])
