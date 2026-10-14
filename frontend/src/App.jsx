@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react'
 import { api, acharOuCriar, getBase, setBase } from './api'
 
 const PAGS = [['inicio', 'HOME'], ['catalogo', 'CATALOGO'], ['alugar', 'ALUGUE AQUI'], ['clube', 'CLUBE DE SOCIOS'], ['recados', 'LIVRO DE VISITAS'], ['sobre', 'QUEM SOMOS']]
+const paginaDaUrl = () => {
+  const caminho = window.location.pathname.replace(/^\/+|\/+$/g, '')
+  return PAGS.some(([id]) => id === caminho) ? caminho : 'inicio'
+}
 const RECADOS = [
   { nome: 'Ricardinho', cidade: 'Aracatuba-SP', txt: 'Melhor locadora do bairro!! alugo aqui desde 96. abracos pro seu Jorge do balcao' },
   { nome: 'Fabi_Girl', cidade: 'Birigui', txt: 'adorei a homepage de voces!!! poe mais filme de romance por favor :):):)' },
@@ -241,7 +245,7 @@ const Sobre = ({ dados }) => (
 
 /* ---------- app ---------- */
 export default function App() {
-  const [pag, setPag] = useState('inicio')
+  const [pag, setPag] = useState(paginaDaUrl)
   const [fitaSel, setFitaSel] = useState('')
   const [dados, setDados] = useState({ produtos: [], planos: [], alugueis: [], clientes: [] })
   const [erro, setErro] = useState('')
@@ -254,8 +258,18 @@ export default function App() {
     } catch (e) { setErro(e.message) }
   }
   useEffect(() => { carregar() }, [])
+  useEffect(() => {
+    const aoNavegar = () => setPag(paginaDaUrl())
+    window.addEventListener('popstate', aoNavegar)
+    return () => window.removeEventListener('popstate', aoNavegar)
+  }, [])
 
-  const ir = (p) => { setPag(p); window.scrollTo(0, 0) }
+  const ir = (p) => {
+    setPag(p)
+    const url = p === 'inicio' ? '/' : `/${p}`
+    if (window.location.pathname !== url) window.history.pushState({ pagina: p }, '', url)
+    window.scrollTo(0, 0)
+  }
   const alugarFita = (id) => { setFitaSel(String(id)); ir('alugar') }
   const configApi = () => { const u = prompt('Endereco da API:', getBase()); if (u) { setBase(u); carregar() } }
 

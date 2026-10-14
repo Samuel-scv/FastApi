@@ -100,7 +100,7 @@ def devolver(db: Session, aluguel_id: int, dados: schemas.Devolucao) -> schemas.
         raise HTTPException(400, "A devolução não pode ser anterior à retirada.")
 
     aluguel.data_devolucao = data
-    aluguel.multa_paga = dados.multa if dados.multa is not None else regras.calcular_multa(aluguel)
+    aluguel.maulta_paga = dados.multa if dados.multa is not None else regras.calcular_multa(aluguel)
     aluguel.status = "devolvido"
 
     produto = db.get(models.Produto, aluguel.produto_id)

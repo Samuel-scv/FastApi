@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const http = axios.create({
-  baseURL: localStorage.getItem('galaxia90_api') || 'http://127.0.0.1:8000',
+  baseURL: localStorage.getItem('galaxia90_api') || import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
 })
 
 export const getBase = () => http.defaults.baseURL
