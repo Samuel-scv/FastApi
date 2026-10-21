@@ -1,0 +1,45 @@
+# Simula a produção na sua máquina:
+#   docker compose -f compose.prod.yaml up --build
+# Frontend: http://localhost:8080   API: http://localhost:8000/docs
+services:
+  api:
+    build:
+      context: ./backend
+      target: prod
+    # .env é opcional: sem ele valem os padrões do código (veja backend/.env.example)
+    env_file:
+      - path: ./backend/.env
+        required: false
+    environment:
+      APP_DATA_DIR: /app/data
+      DATABASE_URL: sqlite:///./galaxia.db
+      CORS_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+    ports:
+      - "8000:8000"
+    volumes:
+      - api_data:/app/data        # só o banco; nenhum código-fonte montado
+    restart: unless-stopped
+    healthcheck:
+      # a imagem slim não tem curl: usamos o Python que já existe nela
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+
+  web:
+    build:
+      context: ./frontend
+      target: prod
+      args:
+        # variável pública: é gravada no JavaScript durante o build
+        VITE_API_URL: http://localhost:8000
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  api_data:

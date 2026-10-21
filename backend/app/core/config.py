@@ -18,8 +18,9 @@ def _lista(valor: str) -> list[str]:
 
 
 def _database_url() -> str:
-    url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'galaxia.db'}")
     data_dir = os.getenv("APP_DATA_DIR")
+    padrao = Path(data_dir) / "galaxia.db" if data_dir else BASE_DIR / "galaxia.db"
+    url = os.getenv("DATABASE_URL", f"sqlite:///{padrao}")
     if not data_dir or not url.startswith("sqlite:"):
         return url
 

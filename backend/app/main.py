@@ -51,3 +51,9 @@ app.include_router(vendas.router)
 @app.get("/", tags=["status"])
 def raiz():
     return {"status": "no ar", "loja": "Video Locadora Galaxia", "docs": "/docs"}
+
+
+@app.get("/health", tags=["status"])
+def health():
+    """Usado pelo healthcheck do Docker."""
+    return {"status": "ok"}
