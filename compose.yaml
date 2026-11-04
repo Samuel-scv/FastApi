@@ -4,16 +4,19 @@ services:
       context: ./backend
       target: dev
     env_file:
-      - ./backend/.env
+      - path: ./backend/.env
+        required: false
     environment:
       APP_DATA_DIR: /app/data
       DATABASE_URL: sqlite:///./galaxia.db
-      CORS_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+      CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+      WATCHFILES_FORCE_POLLING: "true"
     ports:
       - "8000:8000"
     volumes:
       - ./backend/app:/app/app
       - api_data:/app/data
+      - ./backend/tests:/app/tests
 
   web:
     build:
