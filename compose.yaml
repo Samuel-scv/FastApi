@@ -17,22 +17,30 @@ services:
       - ./backend/app:/app/app
       - api_data:/app/data
       - ./backend/tests:/app/tests
+    networks:
+      - app_internal
 
   web:
     build:
       context: ./frontend
       target: dev
       args:
-        VITE_API_URL: http://localhost:8000
+        VITE_API_URL: /api
     depends_on:
       - api
     environment:
-      VITE_API_URL: http://localhost:8000
+      VITE_API_URL: /api
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    networks:
+      - app_internal
 
 volumes:
   api_data:
+
+networks:
+  app_internal:
+    driver: bridge

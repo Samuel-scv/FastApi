@@ -19,6 +19,8 @@ services:
     volumes:
       - api_data:/app/data        # só o banco; nenhum código-fonte montado
     restart: unless-stopped
+    networks:
+      - app_internal
     healthcheck:
       # a imagem slim não tem curl: usamos o Python que já existe nela
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
@@ -33,13 +35,19 @@ services:
       target: prod
       args:
         # variável pública: é gravada no JavaScript durante o build
-        VITE_API_URL: http://localhost:8000
+        VITE_API_URL: /api
     ports:
       - "8080:80"
     depends_on:
       api:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      - app_internal
 
 volumes:
   api_data:
+
+networks:
+  app_internal:
+    driver: bridge

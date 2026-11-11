@@ -7,6 +7,13 @@ export default defineConfig({
 	server: {
 		allowedHosts: ["samuel.frameworksweb.com.br"],
 		host: '0.0.0.0',
+		proxy: {
+			'/api': {
+				target: 'http://api:8000',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
+			},
+		},
 		watch: { usePolling: true },
 	},
 })
