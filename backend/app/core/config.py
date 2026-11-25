@@ -4,6 +4,7 @@ Os valores vêm do arquivo .env (se existir) e têm padrão sensato, então a AP
 sobe mesmo sem .env. Veja o .env.example para as chaves disponíveis.
 """
 import os
+import secrets
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -37,6 +38,13 @@ class Settings:
     CORS_ORIGINS: list[str] = _lista(os.getenv("CORS_ORIGINS", "*"))
     MULTA_POR_DIA: float = float(os.getenv("MULTA_POR_DIA", "3.5"))
     DIAS_PLANO: int = int(os.getenv("DIAS_PLANO", "30"))  # duração de cada mensalidade
+    # Auth. Sem SECRET_KEY no .env, uma chave aleatória é gerada a cada start (os logins caem ao reiniciar).
+    SECRET_KEY: str = os.getenv("SECRET_KEY") or secrets.token_urlsafe(32)
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+    REFRESH_TOKEN_EXPIRE_DAYS: int = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", "7"))
+    ADMIN_EMAIL: str = os.getenv("ADMIN_EMAIL", "")  # se preenchidos, cria o 1º admin no start
+    ADMIN_SENHA: str = os.getenv("ADMIN_SENHA", "")
 
 
 settings = Settings()

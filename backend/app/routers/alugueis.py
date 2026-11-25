@@ -4,10 +4,11 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from .. import schemas
+from ..core.auth import exigir_vendedor
 from ..core.database import get_db
 from ..services import alugueis as service
 
-router = APIRouter(prefix="/alugueis", tags=["alugueis"])
+router = APIRouter(prefix="/alugueis", tags=["alugueis"], dependencies=[Depends(exigir_vendedor)])
 
 
 @router.get("", response_model=list[schemas.Aluguel])

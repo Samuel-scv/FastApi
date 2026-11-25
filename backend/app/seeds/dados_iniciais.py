@@ -27,6 +27,12 @@ def popular_se_vazio(db: Session) -> None:
         models.Produto(titulo="Tropa de Elite", diretor="José Padilha", genero="Ação",
                        classificacao="18", ano=2007, preco_aluguel=8.9, preco_venda=37.9, estoque=0,
                        sinopse="O capitão Nascimento procura um substituto antes de deixar o BOPE."),
+        models.Produto(titulo="3%", diretor="Pedro Aguilera", genero="Ficção científica", tipo="serie", temporadas=4,
+                       classificacao="16", ano=2016, preco_aluguel=14.9, preco_venda=89.9, estoque=3,
+                       sinopse="Jovens disputam um processo seletivo brutal para viver no lado próspero do mundo."),
+        models.Produto(titulo="Cidade Invisível", diretor="Carlos Saldanha", genero="Fantasia", tipo="serie", temporadas=2,
+                       classificacao="14", ano=2021, preco_aluguel=12.9, preco_venda=79.9, estoque=1, estoque_minimo=2,
+                       sinopse="Um policial investiga mortes ligadas a criaturas do folclore brasileiro."),
     ]
     db.add_all(produtos)
 

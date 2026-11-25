@@ -17,6 +17,8 @@ class Cliente(Base):
     # Último dia em que a mensalidade vale. Depois dele o plano fica "vencido"
     # e os benefícios (dias extras, carência de multa) deixam de valer.
     plano_vencimento = Column(Date, nullable=True)
+    # Conta do site (login) que corresponde a este cadastro de balcão; vincula quem loga a quem aluga/compra.
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=True, unique=True)
 
     plano = relationship("Plano", back_populates="clientes")
     alugueis = relationship("Aluguel", back_populates="cliente")

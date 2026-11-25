@@ -62,7 +62,14 @@ Fluxo de uma requisição: `router → service → (regras + models) → schema 
 
 ## Regras de negócio
 
+- **Vínculo de conta:** quem se cadastra no site (login) não é automaticamente o mesmo registro do `Cliente` de balcão.
+  `POST /clientes/{id}/vincular-usuario` liga os dois, e só depois disso essa conta consegue avaliar títulos.
+- **Papéis:** quem se cadastra no site é `cliente` (só pergunta e vê a vitrine). `vendedor` e `admin` acessam o balcão
+  (clientes, aluguéis, vendas, estoque) e respondem perguntas. O admin promove vendedores em `PATCH /usuarios/{id}`.
 - **Estoque:** alugar ou vender sem cópia disponível retorna 409. A devolução repõe 1 cópia.
+  Toda mudança no estoque (cadastro, aluguel, devolução, venda, entrada, perda, ajuste) grava uma linha em
+  `GET /estoque/movimentos`. `GET /estoque` mostra, por título, quantas cópias estão na prateleira, na rua e no total,
+  e marca como `baixo` quem tem acervo total menor ou igual ao `estoque_minimo`. Títulos são `filme` ou `serie` (campo `tipo`).
 - **Bloqueio:** cliente com aluguel em atraso não abre novo aluguel (409).
 - **Multa:** `MULTA_POR_DIA` por dia de atraso, calculada até a devolução. O balcão pode
   informar outro valor em `multa` na devolução (ex.: `0` para perdoar).

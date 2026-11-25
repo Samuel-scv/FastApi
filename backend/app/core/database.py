@@ -30,8 +30,27 @@ def atualizar_esquema_sqlite() -> None:
     if engine.dialect.name != "sqlite":
         return
     inspetor = inspect(engine)
+    if "usuarios" in inspetor.get_table_names():
+        colunas = {c["name"] for c in inspetor.get_columns("usuarios")}
+        if "vendedor" not in colunas:
+            with engine.begin() as conn:
+                conn.execute(text("ALTER TABLE usuarios ADD COLUMN vendedor BOOLEAN NOT NULL DEFAULT 0"))
+    if "produtos" in inspetor.get_table_names():
+        colunas = {c["name"] for c in inspetor.get_columns("produtos")}
+        novas = {
+            "tipo": "VARCHAR NOT NULL DEFAULT 'filme'",
+            "temporadas": "INTEGER",
+            "estoque_minimo": "INTEGER NOT NULL DEFAULT 1",
+        }
+        for nome, definicao in novas.items():
+            if nome not in colunas:
+                with engine.begin() as conn:
+                    conn.execute(text(f"ALTER TABLE produtos ADD COLUMN {nome} {definicao}"))
     if "clientes" in inspetor.get_table_names():
         colunas = {c["name"] for c in inspetor.get_columns("clientes")}
         if "plano_vencimento" not in colunas:
             with engine.begin() as conn:
                 conn.execute(text("ALTER TABLE clientes ADD COLUMN plano_vencimento DATE"))
+        if "usuario_id" not in colunas:
+            with engine.begin() as conn:
+                conn.execute(text("ALTER TABLE clientes ADD COLUMN usuario_id INTEGER"))

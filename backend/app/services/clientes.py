@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from .. import models, regras, schemas
 from ..core.config import settings
+from ..core.paginacao import montar, paginar
 from . import alugueis as alugueis_service
 
 
@@ -19,9 +20,13 @@ def serializar(db: Session, cliente: models.Cliente) -> schemas.Cliente:
     return saida
 
 
-def listar(db: Session) -> list[schemas.Cliente]:
-    clientes = db.query(models.Cliente).order_by(models.Cliente.nome).all()
-    return [serializar(db, c) for c in clientes]
+def listar(db: Session, pagina: int = 1, por_pagina: int = 20, q: str | None = None) -> dict:
+    query = db.query(models.Cliente)
+    if q:
+        query = query.filter(models.Cliente.nome.ilike(f"%{q}%"))
+    query = query.order_by(models.Cliente.nome)
+    clientes, total = paginar(query, pagina, por_pagina)
+    return montar([serializar(db, c) for c in clientes], total, pagina, por_pagina)
 
 
 def obter(db: Session, cliente_id: int) -> models.Cliente:
@@ -102,6 +107,18 @@ def renovar_plano(db: Session, cliente_id: int) -> schemas.RenovacaoPlano:
         vencimento_anterior=anterior,
         novo_vencimento=cliente.plano_vencimento,
     )
+
+
+def vincular_usuario(db: Session, cliente_id: int, dados: schemas.VincularUsuario) -> schemas.Cliente:
+    cliente = obter(db, cliente_id)
+    if not db.get(models.Usuario, dados.usuario_id):
+        raise HTTPException(404, "Conta de usuário não encontrada.")
+    if db.query(models.Cliente).filter(models.Cliente.usuario_id == dados.usuario_id, models.Cliente.id != cliente_id).first():
+        raise HTTPException(409, "Essa conta já está vinculada a outro cliente.")
+    cliente.usuario_id = dados.usuario_id
+    db.commit()
+    db.refresh(cliente)
+    return serializar(db, cliente)
 
 
 def historico(db: Session, cliente_id: int) -> schemas.HistoricoCliente:

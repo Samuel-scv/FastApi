@@ -4,6 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from .. import models, schemas
+from . import estoque as estoque_service
 
 
 def listar(db: Session) -> list[models.Venda]:
@@ -36,8 +37,9 @@ def registrar(db: Session, dados: schemas.VendaCriar) -> models.Venda:
         valor_total=round(produto.preco_venda * dados.quantidade, 2),
         data=date.today(),
     )
-    produto.estoque -= dados.quantidade  # baixa definitiva, sem devolução
     db.add(venda)
+    db.flush()
+    estoque_service.registrar_movimento(db, produto, "venda", -dados.quantidade, venda_id=venda.id)  # baixa definitiva
     db.commit()
     db.refresh(venda)
     return venda

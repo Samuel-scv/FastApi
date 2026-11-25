@@ -29,6 +29,10 @@ def estoque(client, produto_id):
     return client.get(f"/produtos/{produto_id}").json()["estoque"]
 
 
+def alugueis_do_cliente(client, cliente_id):
+    return [a for a in client.get("/alugueis").json()["itens"] if a["cliente_id"] == cliente_id]
+
+
 def atrasar(client, aluguel_id, dias):
     """Deixa o aluguel `dias` dias vencido, mexendo direto no banco de teste."""
     from app.core.database import get_db
@@ -46,7 +50,7 @@ def atrasar(client, aluguel_id, dias):
 # ---------- produtos ----------
 def test_crud_de_produto(client):
     p = novo_produto(client, titulo="Bacurau")
-    assert client.get("/produtos").json()[0]["titulo"] == "Bacurau"
+    assert client.get("/produtos").json()["itens"][0]["titulo"] == "Bacurau"
     r = client.put(f"/produtos/{p['id']}", json={"estoque": 7})
     assert r.json()["estoque"] == 7 and r.json()["titulo"] == "Bacurau"
     assert client.delete(f"/produtos/{p['id']}").status_code == 204

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from .. import schemas
+from ..core.auth import exigir_admin
 from ..core.database import get_db
 from ..services import planos as service
 
@@ -18,16 +19,16 @@ def obter_plano(plano_id: int, db: Session = Depends(get_db)):
     return service.obter(db, plano_id)
 
 
-@router.post("", response_model=schemas.Plano, status_code=201)
+@router.post("", response_model=schemas.Plano, status_code=201, dependencies=[Depends(exigir_admin)])
 def criar_plano(dados: schemas.PlanoCriar, db: Session = Depends(get_db)):
     return service.criar(db, dados)
 
 
-@router.put("/{plano_id}", response_model=schemas.Plano)
+@router.put("/{plano_id}", response_model=schemas.Plano, dependencies=[Depends(exigir_admin)])
 def atualizar_plano(plano_id: int, dados: schemas.PlanoAtualizar, db: Session = Depends(get_db)):
     return service.atualizar(db, plano_id, dados)
 
 
-@router.delete("/{plano_id}", status_code=204)
+@router.delete("/{plano_id}", status_code=204, dependencies=[Depends(exigir_admin)])
 def excluir_plano(plano_id: int, db: Session = Depends(get_db)):
     service.excluir(db, plano_id)

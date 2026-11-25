@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -15,6 +15,9 @@ class ProdutoBase(BaseModel):
     preco_aluguel: float = Field(ge=0, default=0)
     preco_venda: float = Field(ge=0, default=0)
     estoque: int = Field(ge=0, default=0)
+    tipo: Literal["filme", "serie"] = "filme"
+    temporadas: Optional[int] = Field(ge=1, default=None)
+    estoque_minimo: int = Field(ge=0, default=1)
 
 
 class ProdutoCriar(ProdutoBase):
@@ -33,8 +36,13 @@ class ProdutoAtualizar(BaseModel):
     preco_aluguel: Optional[float] = Field(ge=0, default=None)
     preco_venda: Optional[float] = Field(ge=0, default=None)
     estoque: Optional[int] = Field(ge=0, default=None)
+    tipo: Optional[Literal["filme", "serie"]] = None
+    temporadas: Optional[int] = Field(ge=1, default=None)
+    estoque_minimo: Optional[int] = Field(ge=0, default=None)
 
 
 class Produto(ProdutoBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    nota_media: Optional[float] = None
+    total_avaliacoes: int = 0

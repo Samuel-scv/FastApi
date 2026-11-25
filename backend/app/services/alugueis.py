@@ -4,6 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session, joinedload
 
 from .. import models, regras, schemas
+from . import estoque as estoque_service
 
 
 def serializar(aluguel: models.Aluguel) -> schemas.Aluguel:
@@ -64,8 +65,9 @@ def _abrir(db: Session, cliente: models.Cliente, produto: models.Produto, dias: 
         multa_paga=0,
         status="ativo",
     )
-    produto.estoque -= 1
     db.add(aluguel)
+    db.flush()  # gera o id do aluguel para ligar ao histórico do estoque
+    estoque_service.registrar_movimento(db, produto, "aluguel", -1, aluguel_id=aluguel.id)
     return aluguel
 
 
@@ -105,7 +107,7 @@ def devolver(db: Session, aluguel_id: int, dados: schemas.Devolucao) -> schemas.
 
     produto = db.get(models.Produto, aluguel.produto_id)
     if produto:
-        produto.estoque += 1
+        estoque_service.registrar_movimento(db, produto, "devolucao", 1, aluguel_id=aluguel.id)
 
     db.commit()
     db.refresh(aluguel)

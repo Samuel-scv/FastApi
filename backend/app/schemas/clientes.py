@@ -18,6 +18,10 @@ class ClienteBase(BaseModel):
     plano_id: Optional[int] = None
 
 
+class VincularUsuario(BaseModel):
+    usuario_id: int
+
+
 class ClienteCriar(ClienteBase):
     pass
 
@@ -42,6 +46,7 @@ class Cliente(ClienteBase):
     locacoes_no_mes: int = 0
     limite_mensal: Optional[int] = None  # do plano vigente
     limite_atingido: bool = False
+    usuario_id: Optional[int] = None  # conta do site vinculada, se houver
 
 
 class RenovacaoPlano(BaseModel):
