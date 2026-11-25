@@ -91,3 +91,11 @@ export async function acharOuCriar(nome, fone, cidade = '') {
     api('POST', '/clientes', { nome, telefone: fone, endereco: cidade })
   )
 }
+
+/* monta ?a=1&b=2 ignorando valores vazios */
+export function query(params) {
+  const q = new URLSearchParams()
+  Object.entries(params).forEach(([k, v]) => { if (v !== '' && v != null) q.set(k, v) })
+  const txt = q.toString()
+  return txt ? `?${txt}` : ''
+}

@@ -34,6 +34,14 @@ body {
   .rotulo { @apply mt-2 mb-0.5 block font-sans text-[11px] text-[#ffff66]; }
   .th { @apply outset border-2 border-[#9966ff] bg-roxo p-1.5 font-sans text-xs text-[#ffff00]; }
   .td { @apply inset border-2 border-[#444488] p-1.5 align-top; }
+
+  /* telas de gestao: sem enfeite */
+  .s-bt { @apply cursor-pointer border border-[#888] bg-transparent px-3 py-1 font-sans text-sm text-[#ddd] hover:bg-[#222] disabled:cursor-default disabled:opacity-50; }
+  .s-campo { @apply w-full border border-[#888] bg-black px-2 py-1 font-sans text-sm text-[#ddd]; }
+  .s-rotulo { @apply mt-2 mb-0.5 block font-sans text-xs text-[#aaa]; }
+  .s-tabela { @apply w-full border-collapse font-sans text-sm; }
+  .s-th { @apply border border-[#555] px-2 py-1 text-left font-normal text-[#aaa]; }
+  .s-td { @apply border border-[#555] px-2 py-1 align-top text-[#ddd]; }
 }
 
 @keyframes pisca { to { visibility: hidden; } }

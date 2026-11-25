@@ -8,9 +8,13 @@ import Clube from './pages/Clube'
 import Recados from './pages/Recados'
 import Sobre from './pages/Sobre'
 import Auth from './pages/Auth'
+import Estoque from './pages/Estoque'
+import Perguntas from './pages/Perguntas'
+import PerguntasVendedor from './pages/PerguntasVendedor'
+import Usuarios from './pages/admin/Usuarios'
 import { api, eu, getBase, listarTudo, setBase } from './lib/api'
 import { lerLocal } from './lib/local'
-import { paginaDaUrl } from './lib/paginas'
+import { ehEquipe, paginaDaUrl } from './lib/paginas'
 import { limparSessao, temSessao } from './lib/sessao'
 
 export default function App() {
@@ -20,7 +24,7 @@ export default function App() {
   const [erro, setErro] = useState('')
   const [local, setLocal] = useState(lerLocal)
   const [usuario, setUsuario] = useState(null)
-  const equipe = !!(usuario && (usuario.vendedor || usuario.admin))
+  const equipe = ehEquipe(usuario)
 
   /* catalogo e planos sao publicos; clientes e alugueis exigem vendedor */
   const carregar = async (u = usuario) => {
@@ -77,6 +81,10 @@ export default function App() {
         {pag === 'clube' && <Clube dados={dados} recarregar={carregar} equipe={equipe} usuario={usuario} />}
         {pag === 'recados' && <Recados local={local} setLocal={setLocal} />}
         {pag === 'sobre' && <Sobre dados={dados} />}
+        {pag === 'perguntas' && <Perguntas dados={dados} usuario={usuario} ir={ir} />}
+        {pag === 'estoque' && <Estoque equipe={equipe} usuario={usuario} ir={ir} recarregar={carregar} />}
+        {pag === 'perguntas-vendedor' && <PerguntasVendedor equipe={equipe} usuario={usuario} ir={ir} />}
+        {pag === 'usuarios' && <Usuarios usuario={usuario} ir={ir} />}
         {pag === 'entrar' && <Auth usuario={usuario} aoEntrar={aoEntrar} aoSair={aoSair} ir={ir} />}
       </main>
       <Rodape visitas={local.visitas} onConfigApi={configApi} />
