@@ -66,7 +66,15 @@ export async function entrar(email, senha) {
   return api('GET', '/auth/me')
 }
 
-export const registrar = (nome, email, senha) => api('POST', '/auth/registrar', { nome, email, senha })
+export const registrar = (nome, email, senha, tipo = 'cliente', codigo) =>
+  api('POST', '/auth/registrar', {
+    nome,
+    email,
+    senha,
+    tipo,
+    ...(codigo ? { codigo } : {}),
+  })
+
 export const eu = () => api('GET', '/auth/me')
 
 /* as listagens paginadas devolvem {itens, total, pagina, por_pagina, paginas}; junta todas as paginas */
@@ -82,7 +90,7 @@ export async function listarTudo(caminho, params = {}) {
   }
 }
 
-/* acha o cliente por nome + telefone; se nao existir, cadastra (rotas de vendedor) */
+/* acha o cliente por nome + telefone; se nao existir, cadastra */
 export async function acharOuCriar(nome, fone, cidade = '') {
   const tel = fone.replace(/\D/g, '')
   const lista = await listarTudo('/clientes', { q: nome })

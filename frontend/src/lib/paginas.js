@@ -1,4 +1,4 @@
-/* [id, rotulo, acesso]  acesso: 'todos' | 'equipe' (vendedor ou admin) | 'admin' */
+/* [id, rotulo, acesso] acesso: 'todos' | 'equipe' (vendedor ou admin) | 'admin' */
 export const PAGS = [
   ['inicio', 'HOME', 'todos'],
   ['catalogo', 'CATALOGO', 'todos'],
@@ -13,8 +13,19 @@ export const PAGS = [
   ['entrar', 'ENTRAR', 'todos'],
 ]
 
-export const ehEquipe = (usuario) => !!(usuario && (usuario.vendedor || usuario.admin))
-export const podeVer = (acesso, usuario) => acesso === 'todos' || (acesso === 'equipe' && ehEquipe(usuario)) || (acesso === 'admin' && !!usuario?.admin)
+export const ehEquipe = (usuario) =>
+  !!(
+    usuario &&
+    (usuario.vendedor ||
+      usuario.admin ||
+      usuario.tipo === 'vendedor' ||
+      usuario.role === 'vendedor')
+  )
+
+export const podeVer = (acesso, usuario) =>
+  acesso === 'todos' ||
+  (acesso === 'equipe' && ehEquipe(usuario)) ||
+  (acesso === 'admin' && !!usuario?.admin)
 
 export const paginaDaUrl = () => {
   const caminho = window.location.pathname.replace(/^\/+|\/+$/g, '')

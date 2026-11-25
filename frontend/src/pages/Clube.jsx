@@ -3,16 +3,15 @@ import { Preco } from '../components/Etiquetas'
 import { acharOuCriar, api } from '../lib/api'
 import { dataBR, dinheiro } from '../lib/formatar'
 
-export default function Clube({ dados, recarregar, equipe, usuario }) {
+export default function Clube({ dados, recarregar }) {
   const assinar = async (p) => {
-    if (!equipe) return alert(usuario ? 'A assinatura e feita no balcao, por um vendedor.' : 'Entre com a conta de vendedor para assinar.')
     const nome = (prompt('Seu nome completo:') || '').trim(); if (!nome) return
     const fone = (prompt('Seu telefone:') || '').trim(); if (!fone) return
     try {
       let c = await acharOuCriar(nome, fone)
       c = await api('PUT', `/clientes/${c.id}`, { plano_id: p.id })
       await recarregar()
-      alert(`OBA! ${c.nome} agora e socio do ${p.nome}.\n\nCarteirinha valida ate ${dataBR(c.plano_vencimento)}.\nA mensalidade de ${dinheiro(p.preco_mensal)} e paga no balcao.`)
+      alert(`Bem vindo novo membro!\n\n${c.nome} agora e socio do ${p.nome}.\nCarteirinha valida ate ${dataBR(c.plano_vencimento)}.\nA mensalidade de ${dinheiro(p.preco_mensal)} e paga no balcao.`)
     } catch (e) { alert(`NAO FOI POSSIVEL ASSINAR:\n${e.message}`) }
   }
   const cores = ['#999999', '#ffcc00', '#66ffff']
